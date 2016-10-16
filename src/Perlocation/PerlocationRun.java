@@ -1,74 +1,94 @@
 package Perlocation;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public class PerlocationRun {
 
-    public static void main(String[]args){
+    public static void main(String[]args) {
 
+        /*
         Percolation percolation = new Percolation(4);
-        Site[][] perlocationSite = percolation.getSites();
-
-        //open a site
 
         percolation.open(1, 0);
-        printPerlocationSite(percolation.getSites());
+        percolation.print();
         System.out.println("Result: " + percolation.percolates());
         System.out.println("----------------------------------------------");
 
         percolation.open(0, 1);
-        printPerlocationSite(percolation.getSites());
+        percolation.print();
         System.out.println("Result: " + percolation.percolates());
         System.out.println("----------------------------------------------");
 
 
         percolation.open(1, 2);
-        printPerlocationSite(percolation.getSites());
+        percolation.print();
         System.out.println("Result: " + percolation.percolates());
         System.out.println("----------------------------------------------");
 
 
         percolation.open(3, 1);
-        printPerlocationSite(percolation.getSites());
+        percolation.print();
         System.out.println("Result: " + percolation.percolates());
         System.out.println("----------------------------------------------");
 
 
         percolation.open(2, 3);
-        printPerlocationSite(percolation.getSites());
+        percolation.print();
         System.out.println("Result: " + percolation.percolates());
         System.out.println("----------------------------------------------");
 
         percolation.open(0, 2);
-        printPerlocationSite(percolation.getSites());
+        percolation.print();
         System.out.println("Result: " + percolation.percolates());
         System.out.println("----------------------------------------------");
 
 
         percolation.open(2, 2);
-        printPerlocationSite(percolation.getSites());
+        percolation.print();
         System.out.println("Result: " + percolation.percolates());
         System.out.println("----------------------------------------------");
 
         percolation.open(3, 2);
-        printPerlocationSite(percolation.getSites());
+        percolation.print();
         System.out.println("Result: " + percolation.percolates());
         System.out.println("----------------------------------------------");
 
+        */
+
+
+        //run percolation stats
+
+        final Logger l = Logger.getLogger("PercolationStats Test Run Logger");
+
+        if (isValidNumberInput(args[0]) && isValidNumberInput(args[1])) {
+            int gridSize = Integer.parseInt(args[0]);
+            int trials = Integer.parseInt(args[1]);
+
+            l.log(Level.INFO, "gridSize: " + gridSize + ", trials: " + trials);
+
+            PercolationStats stats = new PercolationStats(gridSize, trials);
+            double mean = stats.mean();
+            double stdev = stats.stddev();
+            double confLow = stats.confidenceLo();
+            double conHi = stats.confidenceHi();
+
+            System.out.println("########################");
+            System.out.println("mean: " + mean);
+            System.out.println("StdDev: " + stdev);
+            System.out.println("Confidence Interval: [" + confLow + ", " + conHi + "]");
+
+        } else System.out.println("input is not valid!");
     }
 
-    public static void printPerlocationSite(Site[][] perlocationSite){
-        for(int i = 0; i < perlocationSite.length; i++){
-            System.out.print("| ");
-            for(int j = 0; j < perlocationSite[i].length; j++){
-                if(perlocationSite[i][j].isFull()){
-                    System.out.print("### | ");
-                } else if (perlocationSite[i][j].isOpen()) {
-                    System.out.print("+++ | ");
-                } else {
-                    System.out.print("    | ");
-                }
-            }
-            System.out.println();
+    public static boolean isValidNumberInput(String input){
+        try {
+            Integer.parseInt(input);
+        } catch(NumberFormatException e) {
+            return false;
+        } catch(NullPointerException e) {
+            return false;
         }
+        return true;
     }
-
 }

@@ -1,7 +1,5 @@
 package Perlocation;
 
-import edu.princeton.cs.algs4.StdRandom;
-import edu.princeton.cs.algs4.StdStats;
 import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 
 public class Percolation {
@@ -118,6 +116,22 @@ public class Percolation {
 
     public Site[][] getSites(){
         return sites;
+    }
+
+    public void print(){
+        for(int i = 0; i < sites.length; i++){
+            System.out.print("| ");
+            for(int j = 0; j < sites[i].length; j++){
+                if(sites[i][j].isFull()){
+                    System.out.print("### | ");
+                } else if (sites[i][j].isOpen()) {
+                    System.out.print("+++ | ");
+                } else {
+                    System.out.print("    | ");
+                }
+            }
+            System.out.println();
+        }
     }
 
     //gets index for row, column of grid
